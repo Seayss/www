@@ -59,8 +59,7 @@ class Contribute extends React.Component {
           2、饿了么 cookie 需要验证手机号之后再贡献<br />
           3、失效的 cookie 验证后想要再贡献，需要先删除<br />
           4、贡献每一个 QQ，需要清除浏览器 cookie 或打开隐身（无痕）模式再登录<br />
-          5、一个手机号只能为一个 cookie 验证，重复验证被我们检测将置为失效小号<br />
-          6、为了防止用户刷排行骗取美团次数，贡献的小号需要1天之后才允许删除
+          5、一个手机号只能为一个 cookie 验证，重复验证被我们检测将置为失效小号
         </div>
         <div style={{marginBottom: 5}}>以下两种方式均可贡献饿了么小号：</div>
         <Radio.Group onChange={this.changeContributeMode} value={contributeMode} style={{marginBottom: '12px'}}>
