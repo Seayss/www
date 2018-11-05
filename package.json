@@ -13,6 +13,7 @@
     "deep": "0.0.2",
     "echarts": "^4.0.4",
     "gitalk": "mtdhb/gitalk",
+    "hex2dec": "^1.1.0",
     "moment": "^2.22.1",
     "qrcode.react": "^0.8.0",
     "qs": "^6.5.1",

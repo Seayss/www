@@ -1,4 +1,5 @@
 import React from 'react';
+import hex2dec from 'hex2dec';
 import {Button, Collapse, Form, Input, Table, Checkbox, Tooltip, message, Icon} from 'antd';
 import {axios, apis, qs} from '../../api';
 import moment from 'moment';
@@ -16,6 +17,16 @@ class GetHongbao extends React.Component {
   getHongbao = async params => {
     try {
       params.force = params.force ? 1 : 0;
+      // 19位数字可能是订单号，转成16进制就是sn
+      if (/^[0-9]{19}$/.test(params.url)) {
+        params.url = hex2dec.decToHex(params.url, {
+          prefix: false
+        });
+      }
+      // 16位可能是sn，手动拼一下
+      if (/^[0-9a-z]{16}$/i.test(params.url)) {
+        params.url = `https://h5.ele.me/hongbao/#sn=${params.url}`;
+      }
       const data = await axios.post(apis.getHongbao, qs.stringify(params));
       if (data.code === 0) {
         this.props.callback(data.data);
@@ -148,12 +159,12 @@ class GetHongbao extends React.Component {
             rules: [
               {
                 required: true,
-                message: '请输入美团、饿了么拼手气红包链接'
+                message: '请输入美团、饿了么拼手气红包链接。饿了么除了可以输入链接，也支持订单号或者sn提交'
               }
             ]
           })(
             <Input.TextArea
-              placeholder="请输入美团、饿了么拼手气红包链接（不知道怎么复制链接？请到页面底部查看方法）"
+              placeholder="请输入美团、饿了么拼手气红包链接。饿了么除了可以输入链接，也支持订单号或者sn提交（不知道怎么复制链接？请到页面底部查看方法）"
               autosize={{minRows: 8, maxRows: 8}}
             />
           )}
@@ -216,8 +227,8 @@ class GetHongbao extends React.Component {
           <Collapse.Panel header="如何复制红包链接？" key="3">
             1. 分享到 QQ，选择 “我的电脑”，PC 版 QQ 复制链接。<br />
             2. 分享到微信，PC 版微信右键用浏览器打开，复制链接。<br />
-            3. 长按微信分享的卡片 - 点击更多 - 发送邮件 - 复制链接。（如果看不到链接，在微信的设置 - 通用 - 功能 -
-            开启邮箱提醒）
+            3. 长按微信分享的卡片 - 点击更多 - 发送邮件 - 复制链接（如果看不到链接，在微信的设置 - 通用 - 功能 -
+            开启邮箱提醒）。 4. 饿了么 APP 买过的订单点进去，复制订单号。
           </Collapse.Panel>
         </Collapse>
       </div>
