@@ -13,6 +13,7 @@ export default class Rank extends React.Component {
     const {data} = this.props;
     (data.meituan || []).forEach((item, index) => (item.key = index));
     (data.ele || []).forEach((item, index) => (item.key = index));
+    (data.star || []).forEach((item, index) => (item.key = index));
     (data.eleYesterday || []).forEach((item, index) => (item.key = index));
 
     const columns = [
@@ -52,6 +53,7 @@ export default class Rank extends React.Component {
             <Radio value="meituan">美团</Radio>
             <Radio value="ele">饿了么</Radio>
             <Radio value="eleYesterday">饿了么昨日</Radio>
+            <Radio value="star">饿了么星选</Radio>
           </Radio.Group>
         </div>
         <Table dataSource={data[this.state.rank]} columns={columns} pagination={false} />

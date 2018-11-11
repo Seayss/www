@@ -57,7 +57,7 @@ export default class Home extends React.Component {
       historyList: [],
       createTime: 15,
       tab: localStorage.getItem('tab') || '1',
-      application: 1, // parseInt(localStorage.getItem('application') || 0, 10),
+      application: parseInt(localStorage.getItem('application') || 1, 10),
       carouselRecords: [],
       rankData: {},
       trendData: {},
@@ -140,7 +140,7 @@ export default class Home extends React.Component {
               <div key={i} style={{color: '#5bab60', fontSize: '16px', whiteSpace: 'nowrap'}}>
                 {o.mail} 在 {moment(new Date(o.gmtModified)).format('HH:mm:ss')} 领到
                 <span style={{color: '#dd2323'}}>&nbsp;{o.price}&nbsp;</span>
-                元{o.application ? '饿了么' : '美团'}大红包
+                元{o.application === 0 ? '美团' : '饿了么'}大红包
               </div>
             ))}
           </Carousel>
@@ -184,7 +184,7 @@ export default class Home extends React.Component {
         cookies.forEach((c, i) => {
           c.time = moment(new Date(c.gmtCreate)).format('YYYY-MM-DD HH:mm:ss');
           c.key = i;
-          c.nickname = c.nickname || '--';
+          c.nickname = `[ID:${c.id}] ${c.nickname || '无昵称'}`;
         });
         this.setState({cookies});
       } else {
