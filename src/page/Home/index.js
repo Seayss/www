@@ -312,24 +312,26 @@ export default class Home extends React.Component {
   };
 
   renderAvailable() {
-    const {meituan, ele} = this.state.number;
+    const {meituan, ele, star} = this.state.number;
     return (
       <Alert
         style={{margin: '15px 0'}}
         message={
           this.state.user.mail ? (
-            meituan.total === 0 && ele.total === 0 ? (
+            [meituan, ele, star].every(item => !item || item.total === 0) ? (
               '您还没有任何贡献，请查看规则和贡献教程'
             ) : (
               <div>
-                <span>今日剩余次数：美团</span>
-                <span style={{color: '#dd2323', padding: '0 10px 0 5px'}}>
-                  {meituan.available}/{meituan.total}
-                </span>
-                <span>饿了么</span>
-                <span style={{color: '#dd2323', padding: '0 10px 0 5px'}}>
-                  {ele.available}/{ele.total}
-                </span>
+                {[{text: '美团', value: meituan}, {text: '饿了么', value: ele}, {text: '饿了么星选', value: star}].map(
+                  item => (
+                    <span>
+                      <span>{item.text}</span>
+                      <span style={{color: '#dd2323', padding: '0 10px 0 5px'}}>
+                        {item.value.available}/{item.value.total}
+                      </span>
+                    </span>
+                  )
+                )}
               </div>
             )
           ) : (
