@@ -1,6 +1,6 @@
-import React from 'react';
-import echarts from 'echarts';
-import deep from 'deep';
+import React from "react";
+import echarts from "echarts";
+import deep from "deep";
 
 export default class Echarts extends React.Component {
   static echarts = echarts;
@@ -37,45 +37,47 @@ export default class Echarts extends React.Component {
 
     this.echart.setOption(this.props.option);
 
-    this.refs.me.addEventListener('mousedown', this.mousedown);
-    this.refs.me.addEventListener('mouseup', this.mouseup);
-    this.echart.on('click', this.click); //'onClick'需要特殊处理，move过的，就不触发onClick事件
+    this.refs.me.addEventListener("mousedown", this.mousedown);
+    this.refs.me.addEventListener("mouseup", this.mouseup);
+    this.echart.on("click", this.click); //'onClick'需要特殊处理，move过的，就不触发onClick事件
     this.props.group && (this.echart.group = this.props.group);
 
     [
-      'click',
-      'dblclick',
-      'mousedown',
-      'mouseup',
-      'mouseover',
-      'mouseout',
-      'globalout',
-      'legendselectchanged',
-      'legendselected',
-      'legendunselected',
-      'datazoom',
-      'datarangeselected',
-      'timelinechanged',
-      'timelineplaychanged',
-      'restore',
-      'dataviewchanged',
-      'magictypechanged',
-      'geoselectchanged',
-      'geoselected',
-      'geounselected',
-      'pieselectchanged',
-      'pieselected',
-      'pieunselected',
-      'mapselectchanged',
-      'mapselected',
-      'mapunselected',
-      'axisareaselected',
-      'brush',
-      'brushselected'
+      "click",
+      "dblclick",
+      "mousedown",
+      "mouseup",
+      "mouseover",
+      "mouseout",
+      "globalout",
+      "legendselectchanged",
+      "legendselected",
+      "legendunselected",
+      "datazoom",
+      "datarangeselected",
+      "timelinechanged",
+      "timelineplaychanged",
+      "restore",
+      "dataviewchanged",
+      "magictypechanged",
+      "geoselectchanged",
+      "geoselected",
+      "geounselected",
+      "pieselectchanged",
+      "pieselected",
+      "pieunselected",
+      "mapselectchanged",
+      "mapselected",
+      "mapunselected",
+      "axisareaselected",
+      "brush",
+      "brushselected"
     ]
       .filter(eventName => this.props[eventName])
-      .map(eventName => this.echart.on(eventName, o => this.props[eventName](o)));
-    window.addEventListener('resize', this.resize);
+      .map(eventName =>
+        this.echart.on(eventName, o => this.props[eventName](o))
+      );
+    window.addEventListener("resize", this.resize);
     setTimeout(this.resize, 360);
     this.mounted = true;
   };
@@ -95,7 +97,7 @@ export default class Echarts extends React.Component {
   }
 
   componentWillUnmount = e => {
-    window.removeEventListener('resize', this.resize);
+    window.removeEventListener("resize", this.resize);
     this.echart.dispose();
     this.mounted = false;
   };

@@ -1,23 +1,23 @@
-import React from 'react';
-import {Alert, Breadcrumb, Tabs, message, Carousel} from 'antd';
-import styled from 'styled-components';
-import moment from 'moment';
-import {axios, apis, logout} from '../../api';
-import Alipay from '../../component/Alipay';
-import Notice from '../../component/Notice';
-import Loadable from '../../component/Loadable';
-import Media from '../../component/Media';
-import Domain from '../../component/Domain';
-import GetHongbao from './GetHongbao';
-import Contribute from './Contribute';
-import FriendLink from './FriendLink';
-import Rules from './Rules';
-import Rank from './Rank';
-import Statistics from './Statistics';
-import JoinGroup from './JoinGroup';
-import MiniProgram from './MiniProgram';
-import {browserHistory} from 'react-router';
-const Talk = Loadable(() => import('../../component/Talk'));
+import React from "react";
+import { Alert, Breadcrumb, Tabs, message, Carousel } from "antd";
+import styled from "styled-components";
+import moment from "moment";
+import { axios, apis, logout } from "../../api";
+import Alipay from "../../component/Alipay";
+import Notice from "../../component/Notice";
+import Loadable from "../../component/Loadable";
+import Media from "../../component/Media";
+import Domain from "../../component/Domain";
+import GetHongbao from "./GetHongbao";
+import Contribute from "./Contribute";
+import FriendLink from "./FriendLink";
+import Rules from "./Rules";
+import Rank from "./Rank";
+import Statistics from "./Statistics";
+import JoinGroup from "./JoinGroup";
+import MiniProgram from "./MiniProgram";
+import { browserHistory } from "react-router";
+const Talk = Loadable(() => import("../../component/Talk"));
 
 const Container = styled.div`
   display: flex;
@@ -56,8 +56,8 @@ export default class Home extends React.Component {
       },
       historyList: [],
       createTime: 15,
-      tab: localStorage.getItem('tab') || '1',
-      application: parseInt(localStorage.getItem('application') || 1, 10),
+      tab: localStorage.getItem("tab") || "1",
+      application: parseInt(localStorage.getItem("application") || 1, 10),
       carouselRecords: [],
       rankData: {},
       trendData: {},
@@ -66,11 +66,11 @@ export default class Home extends React.Component {
         meituan: []
       }
     };
-    document.body.classList.add('is-home');
+    document.body.classList.add("is-home");
   }
 
   componentDidMount() {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       this.callApiByTab();
       this.getUserInfo();
       this.getAvailableCount();
@@ -81,7 +81,15 @@ export default class Home extends React.Component {
   }
 
   render() {
-    const {application, historyList, tab, cookies, rankData, trendData, pieData} = this.state;
+    const {
+      application,
+      historyList,
+      tab,
+      cookies,
+      rankData,
+      trendData,
+      pieData
+    } = this.state;
     return (
       <Container>
         <Column>
@@ -100,7 +108,10 @@ export default class Home extends React.Component {
               <Rules />
             </Tabs.TabPane>
             <Tabs.TabPane tab="领取" key="getHongbao">
-              <GetHongbao historyList={historyList} callback={this.getHongbaoCallback} />
+              <GetHongbao
+                historyList={historyList}
+                callback={this.getHongbaoCallback}
+              />
             </Tabs.TabPane>
             <Tabs.TabPane tab="贡献" key="contribute">
               <Contribute
@@ -131,21 +142,29 @@ export default class Home extends React.Component {
   }
 
   renderCarousel() {
-    const {carouselRecords = []} = this.state;
+    const { carouselRecords = [] } = this.state;
     return (
-      <div style={{height: '30px', overflow: 'hidden'}}>
+      <div style={{ height: "30px", overflow: "hidden" }}>
         {carouselRecords.length ? (
           <Carousel vertical autoplay>
             {carouselRecords.map((o, i) => (
-              <div key={i} style={{color: '#5bab60', fontSize: '16px', whiteSpace: 'nowrap'}}>
-                {o.mail} 在 {moment(new Date(o.gmtModified)).format('HH:mm:ss')} 领到
-                <span style={{color: '#dd2323'}}>&nbsp;{o.price}&nbsp;</span>
-                元{o.application === 0 ? '美团' : '饿了么'}大红包
+              <div
+                key={i}
+                style={{
+                  color: "#5bab60",
+                  fontSize: "16px",
+                  whiteSpace: "nowrap"
+                }}
+              >
+                {o.mail} 在 {moment(new Date(o.gmtModified)).format("HH:mm:ss")}{" "}
+                领到
+                <span style={{ color: "#dd2323" }}>&nbsp;{o.price}&nbsp;</span>
+                元{o.application === 0 ? "美团" : "饿了么"}大红包
               </div>
             ))}
           </Carousel>
         ) : (
-          ''
+          ""
         )}
       </div>
     );
@@ -154,23 +173,27 @@ export default class Home extends React.Component {
   deleteCookieCallback = id => {
     //前端删除
     let cookies = this.state.cookies.filter(o => o.id !== id);
-    this.setState({cookies});
+    this.setState({ cookies });
     //刷新
     this.getAvailableCount();
   };
 
   getTrend = e => {
-    axios.get(apis.getTrend).then(data => this.setState({trendData: data.data}));
+    axios
+      .get(apis.getTrend)
+      .then(data => this.setState({ trendData: data.data }));
   };
 
   getRank = e => {
-    axios.get(apis.getRank).then(data => this.setState({rankData: data.data}));
+    axios
+      .get(apis.getRank)
+      .then(data => this.setState({ rankData: data.data }));
   };
 
   getUserInfo = e => {
     axios.get(apis.getUser).then(data => {
       if (data.code === 0) {
-        this.setState({user: data.data});
+        this.setState({ user: data.data });
       } else {
         message.error(data.message);
       }
@@ -182,11 +205,11 @@ export default class Home extends React.Component {
       if (data.code === 0) {
         let cookies = data.data;
         cookies.forEach((c, i) => {
-          c.time = moment(new Date(c.gmtCreate)).format('YYYY-MM-DD HH:mm:ss');
+          c.time = moment(new Date(c.gmtCreate)).format("YYYY-MM-DD HH:mm:ss");
           c.key = i;
-          c.nickname = `[ID:${c.id}] ${c.nickname || '无昵称'}`;
+          c.nickname = `[ID:${c.id}] ${c.nickname || "无昵称"}`;
         });
-        this.setState({cookies});
+        this.setState({ cookies });
       } else {
         message.error(data.message);
       }
@@ -194,55 +217,61 @@ export default class Home extends React.Component {
   };
 
   getAvailableCount = e => {
-    axios.get(apis.getAvailableCount).then(data => this.setState({number: data.data}));
+    axios
+      .get(apis.getAvailableCount)
+      .then(data => this.setState({ number: data.data }));
   };
 
   getHongbaoHistory = e => {
-    axios.get(apis.getHongbaoHistory).then(data => this.setState({historyList: data.data}));
+    axios
+      .get(apis.getHongbaoHistory)
+      .then(data => this.setState({ historyList: data.data }));
   };
 
   refresh = id => {
     axios.get(`${apis.refresh}/${id}`).then(res => {
-      const {data} = res;
+      const { data } = res;
       if (data.status === 0) {
         setTimeout(() => this.refresh(id), 1000);
       } else {
-        const {historyList} = this.state;
+        const { historyList } = this.state;
         historyList[0] = data;
-        this.setState({historyList});
+        this.setState({ historyList });
         this.getAvailableCount();
       }
     });
   };
 
   zhuangbi = e => {
-    axios.get(apis.zhuangbi).then(res => this.setState({carouselRecords: res.data}));
+    axios
+      .get(apis.zhuangbi)
+      .then(res => this.setState({ carouselRecords: res.data }));
   };
 
   getPie = e => {
-    axios.get(apis.getPie).then(res => this.setState({pieData: res.data}));
+    axios.get(apis.getPie).then(res => this.setState({ pieData: res.data }));
   };
 
   onTabChange = tab => {
     this.callApiByTab(tab);
-    localStorage.setItem('tab', tab);
+    localStorage.setItem("tab", tab);
   };
 
   callApiByTab = (tab = this.state.tab) => {
     switch (tab) {
-      case 'getHongbao':
+      case "getHongbao":
         if (this.state.historyList.length) return;
         this.getHongbaoHistory();
         break;
-      case 'contribute':
+      case "contribute":
         if (this.state.cookies.length) return;
         this.getCookieList();
         break;
-      case 'rank':
+      case "rank":
         if (Object.keys(this.state.rankData).length) return;
         this.getRank();
         break;
-      case 'statistics':
+      case "statistics":
         if (Object.keys(this.state.trendData).length) return;
         this.getTrend();
         this.getPie();
@@ -253,9 +282,9 @@ export default class Home extends React.Component {
   };
 
   getHongbaoCallback = data => {
-    let {historyList} = this.state;
+    let { historyList } = this.state;
     historyList = [data].concat(historyList);
-    this.setState({historyList});
+    this.setState({ historyList });
     this.refresh(data.id);
   };
 
@@ -265,25 +294,33 @@ export default class Home extends React.Component {
   };
 
   onApplicationChange = e => {
-    this.setState({application: e.target.value});
-    localStorage.setItem('application', e.target.value);
+    this.setState({ application: e.target.value });
+    localStorage.setItem("application", e.target.value);
   };
 
   renderHello() {
-    const {mail, id} = this.state.user;
-    return <h3>{mail ? `您好 ${mail} (uid: ${id})` : '您好'}</h3>;
+    const { mail, id } = this.state.user;
+    return <h3>{mail ? `您好 ${mail} (uid: ${id})` : "您好"}</h3>;
   }
 
   renderBreadcrumb = e => {
     return (
-      <Breadcrumb style={{margin: '15px 0'}}>
+      <Breadcrumb style={{ margin: "15px 0" }}>
         <Breadcrumb.Item>
-          <a href="https://github.com/mtdhb" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/mtdhb"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             本站开源
           </a>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          <a href="https://github.com/mtdhb/mtdhb/issues" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/mtdhb/mtdhb/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             反馈问题
           </a>
         </Breadcrumb.Item>
@@ -291,7 +328,7 @@ export default class Home extends React.Component {
           <a
             onClick={e => {
               e.preventDefault();
-              browserHistory.push('/applyResetPassword');
+              browserHistory.push("/applyResetPassword");
             }}
           >
             重置密码
@@ -312,30 +349,32 @@ export default class Home extends React.Component {
   };
 
   renderAvailable() {
-    const {meituan, ele, star} = this.state.number;
+    const { meituan, ele, star } = this.state.number;
     return (
       <Alert
-        style={{margin: '15px 0'}}
+        style={{ margin: "15px 0" }}
         message={
           this.state.user.mail ? (
             [meituan, ele, star].every(item => !item || item.total === 0) ? (
-              '您还没有任何贡献，请查看规则和贡献教程'
+              "您还没有任何贡献，请查看规则和贡献教程"
             ) : (
               <div>
-                {[{text: '美团', value: meituan}, {text: '饿了么', value: ele}, {text: '饿了么星选', value: star}].map(
-                  item => (
-                    <span>
-                      <span>{item.text}</span>
-                      <span style={{color: '#dd2323', padding: '0 10px 0 5px'}}>
-                        {item.value.available}/{item.value.total}
-                      </span>
+                {[
+                  { text: "美团", value: meituan },
+                  { text: "饿了么", value: ele },
+                  { text: "饿了么星选", value: star }
+                ].map(item => (
+                  <span>
+                    <span>{item.text}</span>
+                    <span style={{ color: "#dd2323", padding: "0 10px 0 5px" }}>
+                      {item.value.available}/{item.value.total}
                     </span>
-                  )
-                )}
+                  </span>
+                ))}
               </div>
             )
           ) : (
-            '数据加载中，长时间没有响应请刷新页面'
+            "数据加载中，长时间没有响应请刷新页面"
           )
         }
         type="info"

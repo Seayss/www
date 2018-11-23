@@ -1,4 +1,4 @@
-import Loadable from 'react-loadable';
+import Loadable from "react-loadable";
 
 export default loader =>
   Loadable({

@@ -1,5 +1,5 @@
-import {injectGlobal} from 'styled-components';
-import Media from './component/Media';
+import { injectGlobal } from "styled-components";
+import Media from "./component/Media";
 
 injectGlobal`
   html {

@@ -1,9 +1,9 @@
-import React from 'react';
-import {Form, Input, Button, Breadcrumb, message} from 'antd';
-import {browserHistory} from 'react-router';
-import {axios, apis, qs} from '../api';
-import Notice from '../component/Notice';
-import Domain from '../component/Domain';
+import React from "react";
+import { Form, Input, Button, Breadcrumb, message } from "antd";
+import { browserHistory } from "react-router";
+import { axios, apis, qs } from "../api";
+import Notice from "../component/Notice";
+import Domain from "../component/Domain";
 
 class Login extends React.Component {
   constructor() {
@@ -11,7 +11,7 @@ class Login extends React.Component {
     this.state = {
       noticeList: []
     };
-    document.body.classList.remove('is-home');
+    document.body.classList.remove("is-home");
   }
 
   login = data => {
@@ -19,8 +19,8 @@ class Login extends React.Component {
       .post(apis.login, qs.stringify(data))
       .then(data => {
         if (data.code === 0) {
-          localStorage.setItem('token', data.data.token);
-          browserHistory.push('/');
+          localStorage.setItem("token", data.data.token);
+          browserHistory.push("/");
         } else {
           message.error(data.message);
         }
@@ -39,7 +39,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const {getFieldDecorator} = this.props.form;
+    const { getFieldDecorator } = this.props.form;
 
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
@@ -47,28 +47,34 @@ class Login extends React.Component {
           <h2>
             登录<Domain />
           </h2>
-          <span style={{color: '#aaa'}}>每天大红包 · 一键领取手气最佳红包</span>
+          <span style={{ color: "#aaa" }}>
+            每天大红包 · 一键领取手气最佳红包
+          </span>
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('account', {
-            rules: [{required: true, message: '请输入帐号'}]
+          {getFieldDecorator("account", {
+            rules: [{ required: true, message: "请输入帐号" }]
           })(<Input placeholder="请输入帐号" />)}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('password', {
-            rules: [{required: true, message: '请输入密码'}]
+          {getFieldDecorator("password", {
+            rules: [{ required: true, message: "请输入密码" }]
           })(<Input type="password" placeholder="请输入密码" />)}
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
             登录
           </Button>
           <a
             onClick={e => {
               e.preventDefault();
-              browserHistory.push('/apply');
+              browserHistory.push("/apply");
             }}
-            style={{marginLeft: '12px'}}
+            style={{ marginLeft: "12px" }}
           >
             还没有帐号，马上注册
           </a>
@@ -78,11 +84,11 @@ class Login extends React.Component {
             <a
               onClick={e => {
                 e.preventDefault();
-                browserHistory.push('/applyResetPassword');
+                browserHistory.push("/applyResetPassword");
               }}
               style={{
-                display: 'inline-block',
-                margin: '12px 0'
+                display: "inline-block",
+                margin: "12px 0"
               }}
             >
               重置密码
@@ -94,8 +100,8 @@ class Login extends React.Component {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                display: 'inline-block',
-                margin: '12px 0'
+                display: "inline-block",
+                margin: "12px 0"
               }}
             >
               反馈问题

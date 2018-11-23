@@ -1,5 +1,5 @@
-import axios from 'axios';
-import logout from './logout';
+import axios from "axios";
+import logout from "./logout";
 
 const instance = axios.create({
   withCredentials: true
@@ -7,7 +7,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    config.headers.common['X-User-Token'] = localStorage.getItem('token');
+    config.headers.common["X-User-Token"] = localStorage.getItem("token");
     return config;
   },
   err => Promise.reject(err)
@@ -15,7 +15,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   res => {
-    const {data} = res;
+    const { data } = res;
     if (data.code !== 10000) {
       return data;
     }

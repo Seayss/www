@@ -1,6 +1,6 @@
-import React from 'react';
-import {Timeline} from 'antd';
-import {apis, axios} from '../api';
+import React from "react";
+import { Timeline } from "antd";
+import { apis, axios } from "../api";
 
 export default class Notice extends React.Component {
   constructor(props) {
@@ -19,10 +19,12 @@ export default class Notice extends React.Component {
       let noticeList = data.data;
       if (noticeList.length) {
         // 做下接口兼容
-        if (typeof noticeList[0] === 'object') {
-          noticeList = noticeList.filter(notice => ['all', 'web'].includes(notice.type)).map(notice => notice.content);
+        if (typeof noticeList[0] === "object") {
+          noticeList = noticeList
+            .filter(notice => ["all", "web"].includes(notice.type))
+            .map(notice => notice.content);
         }
-        this.setState({noticeList});
+        this.setState({ noticeList });
       }
     });
   }
