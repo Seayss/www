@@ -17,11 +17,6 @@ const list = [
       "http://note.youdao.com/noteshare?id=0290812f8131bed392ed5f037f0c3b5c",
     text: "[贡献微信] 如何贡献美团微信 cookie",
     style: { textDecoration: "line-through" }
-  },
-  {
-    href: "https://github.com/mtdhb/cookie",
-    text: "[一键提取] 美团、饿了么 cookie 一键提取工具",
-    style: { textDecoration: "line-through" }
   }
 ];
 
