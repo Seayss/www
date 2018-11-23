@@ -230,17 +230,6 @@ class GetHongbao extends React.Component {
             </span>
           )}
         </Form.Item>
-        <ul>
-          <li>
-            <a
-              href="https://note.youdao.com/share/?id=1a6addb66a43c56de86c26d1fa52aaa3&type=note#/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              [教程] 饿了么双红包叠加下单
-            </a>
-          </li>
-        </ul>
         <p style={{ color: "#dd2323" }}>最近 10 次领取记录：</p>
         {this.renderHistoryTable()}
         {this.renderDescription()}
