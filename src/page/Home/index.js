@@ -88,7 +88,8 @@ export default class Home extends React.Component {
       cookies,
       rankData,
       trendData,
-      pieData
+      pieData,
+      user
     } = this.state;
     return (
       <Container>
@@ -96,7 +97,7 @@ export default class Home extends React.Component {
           {this.renderCarousel()}
           {this.renderHello()}
           {this.renderBreadcrumb()}
-          <Alipay />
+          <Alipay user={user} />
           <Domain />
           {this.renderAvailable()}
           <Notice />

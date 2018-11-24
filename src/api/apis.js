@@ -19,6 +19,7 @@ const apis = {
   getRank: "rank",
   getPie: "pie",
   getTrend: "trend",
+  createPay: "pay/create",
   getNotice: "notice.json" // 为了方便随时更新公告，直接在 JSON 中维护
 };
 
