@@ -59,7 +59,8 @@ export default class Alipay extends React.Component {
   state = {
     showZhouka: false,
     application: 0,
-    qrcode: ""
+    qrcode: "",
+    wxPayLoading: false
   };
 
   componentDidMount() {
@@ -167,7 +168,11 @@ export default class Alipay extends React.Component {
                   取消
                 </Button>
                 &nbsp;&nbsp;&nbsp;
-                <Button type="primary" onClick={() => this.wxPay()}>
+                <Button
+                  type="primary"
+                  loading={this.state.wxPayLoading}
+                  onClick={() => this.wxPay()}
+                >
                   微信支付
                 </Button>
               </div>
@@ -189,10 +194,10 @@ export default class Alipay extends React.Component {
   }
 
   async wxPay() {
-    if (this._wxPay) {
+    if (this.state.wxPayLoading) {
       return;
     }
-    this._wxPay = true;
+    this.setState({ wxPayLoading: true });
     try {
       const { data, message } = await axios.post(
         apis.createPay,
@@ -209,7 +214,7 @@ export default class Alipay extends React.Component {
     } catch (e) {
       message.error(e.message);
     } finally {
-      this._wxPay = false;
+      this.setState({ wxPayLoading: false });
     }
   }
 }
