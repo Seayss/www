@@ -48,7 +48,7 @@ const Zhouka = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 500;
+  z-index: 400;
   background: #fff;
   display: fixed;
   align-items: center;
@@ -207,7 +207,7 @@ export default class Alipay extends React.Component {
     this.setState({ wxPayLoading: true });
     try {
       const weixin = isWeixin(navigator.userAgent);
-      const { data, message } = await axios.post(
+      const { data, message: message2 } = await axios.post(
         apis.createPay,
         qs.stringify({
           type: weixin ? "cashier" : "native",
@@ -215,8 +215,8 @@ export default class Alipay extends React.Component {
           application: this.state.application
         })
       );
-      if (message) {
-        return message.error(message);
+      if (message2) {
+        return message.error(message2);
       }
       if (weixin) {
         window.location.href = data;
