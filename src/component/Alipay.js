@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Button, message, Icon, Radio } from "antd";
 import Clipboard from "clipboard";
 import styled from "styled-components";
+import isWeixin from "is-weixin";
 import { apis, axios, qs } from "../api";
 
 const Container = styled.div`
@@ -142,9 +143,9 @@ export default class Alipay extends React.Component {
             <div>
               <h1>8.88元 付费周卡(7天)</h1>
               <p>
-                付款后1分钟内生效，请刷新查看次数，支持叠加购买
+                付款后刷新页面查看次数，1分钟内生效
                 <br />
-                不支持退款，包括美团、饿了么和谐等因素
+                支持叠加购买，不支持退款
               </p>
               <Radio.Group
                 onChange={event =>
@@ -176,15 +177,21 @@ export default class Alipay extends React.Component {
                   微信支付
                 </Button>
               </div>
-              <br />
-              <br />
               {this.state.qrcode && (
-                <img
-                  src={this.state.qrcode}
-                  width={200}
-                  height={200}
-                  alt="微信付款码"
-                />
+                <div>
+                  <br />
+                  <img
+                    src={this.state.qrcode}
+                    width={200}
+                    height={200}
+                    alt="微信付款码"
+                  />
+                  <p style={{ marginTop: 10 }}>
+                    使用微信扫一扫付款
+                    <br />
+                    或者在微信环境中打开本站
+                  </p>
+                </div>
               )}
             </div>
           </Zhouka>
@@ -199,10 +206,11 @@ export default class Alipay extends React.Component {
     }
     this.setState({ wxPayLoading: true });
     try {
+      const weixin = isWeixin(navigator.userAgent);
       const { data, message } = await axios.post(
         apis.createPay,
         qs.stringify({
-          type: "native",
+          type: weixin ? "cashier" : "native",
           user_id: this.props.user.id,
           application: this.state.application
         })
@@ -210,7 +218,11 @@ export default class Alipay extends React.Component {
       if (message) {
         return message.error(message);
       }
-      this.setState({ qrcode: data });
+      if (weixin) {
+        window.location.href = data;
+      } else {
+        this.setState({ qrcode: data });
+      }
     } catch (e) {
       message.error(e.message);
     } finally {
