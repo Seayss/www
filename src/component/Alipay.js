@@ -145,7 +145,7 @@ export default class Alipay extends React.Component {
               <p>
                 付款后刷新页面查看次数，1分钟内生效
                 <br />
-                支持叠加购买，不支持退款，次数不支持累积
+                可叠加购买多次，不支持退款，次数不累积
               </p>
               <Radio.Group
                 onChange={event =>
