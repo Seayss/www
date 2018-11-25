@@ -143,9 +143,11 @@ export default class Alipay extends React.Component {
             <div>
               <h1>8.88元 付费周卡(7天)</h1>
               <p>
-                付款后刷新页面查看次数，1分钟内生效
+                付款后刷新页面查看次数，1分钟内生效，不支持退款
                 <br />
-                可叠加购买多次，不支持退款，次数不累积
+                可叠加购买多次，单独计算周卡时间
+                <br />
+                次数不累积到第二天，建议领到最大前一个囤包
               </p>
               <Radio.Group
                 onChange={event =>
