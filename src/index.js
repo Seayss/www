@@ -8,6 +8,6 @@ render(<App />, document.getElementById("root"));
 
 register({
   onUpdate() {
-    message.info("新版本已准备好，刷新页面即可更新");
+    message.info("新版本已准备好，刷新页面即可更新", 0);
   }
 });
