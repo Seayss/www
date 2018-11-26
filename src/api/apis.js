@@ -1,5 +1,3 @@
-import domains from "./domains";
-
 const apis = {
   getCaptcha: "user/registerCaptcha",
   getRegisterCode: "user/registerMail",
@@ -20,10 +18,12 @@ const apis = {
   getPie: "pie",
   getTrend: "trend",
   createPay: "pay/create",
+  getPayList: "pay/list",
   getNotice: "notice.json" // 为了方便随时更新公告，直接在 JSON 中维护
 };
 
-const domain = domains[localStorage.getItem("domain") || 0].value;
-Object.keys(apis).forEach(key => (apis[key] = domain + apis[key]));
+Object.keys(apis).forEach(
+  key => (apis[key] = "https://api.mtdhb.org/" + apis[key])
+);
 
 export default apis;

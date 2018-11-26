@@ -3,7 +3,6 @@ import { Form, Input, Button, Breadcrumb, message } from "antd";
 import { browserHistory } from "react-router";
 import { axios, apis, qs } from "../api";
 import Notice from "../component/Notice";
-import Domain from "../component/Domain";
 
 class Login extends React.Component {
   constructor() {
@@ -44,9 +43,7 @@ class Login extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
-          <h2>
-            登录<Domain />
-          </h2>
+          <h2>登录</h2>
           <span style={{ color: "#aaa" }}>
             每天大红包 · 一键领取手气最佳红包
           </span>

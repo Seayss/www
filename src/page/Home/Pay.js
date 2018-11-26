@@ -4,7 +4,7 @@ import { Button, message, Icon, Radio } from "antd";
 import Clipboard from "clipboard";
 import styled from "styled-components";
 import isWeixin from "is-weixin";
-import { apis, axios, qs } from "../api";
+import { apis, axios, qs } from "../../api";
 
 const Container = styled.div`
   position: relative;
@@ -56,7 +56,7 @@ const Zhouka = styled.div`
   text-align: center;
 `;
 
-export default class Alipay extends React.Component {
+export default class Pay extends React.Component {
   state = {
     showZhouka: false,
     application: 0,
@@ -102,14 +102,14 @@ export default class Alipay extends React.Component {
                 <tr>
                   <td>
                     <img
-                      src={require("../static/zfb.png")}
+                      src={require("../../static/zfb.png")}
                       width="190"
                       alt="打赏 支付宝支付"
                     />
                   </td>
                   <td>
                     <img
-                      src={require("../static/wx.png")}
+                      src={require("../../static/wx.png")}
                       width="190"
                       alt="打赏 微信支付"
                     />
@@ -123,7 +123,7 @@ export default class Alipay extends React.Component {
             红包
             <Image>
               <img
-                src={require("../static/hongbao1.jpg")}
+                src={require("../../static/hongbao1.jpg")}
                 width="290"
                 alt="支付宝 每天领红包"
               />

@@ -1,7 +1,6 @@
 import React from "react";
 import { browserHistory } from "react-router";
 import { Form, Input, Button, message } from "antd";
-import Domain from "../component/Domain";
 import { axios, apis, qs } from "../api";
 
 class Register extends React.Component {
@@ -94,9 +93,7 @@ class Register extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
-          <h2>
-            设置密码<Domain />
-          </h2>
+          <h2>设置密码</h2>
         </Form.Item>
         <Form.Item
           key={2}

@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Form, Input, message } from "antd";
-import Domain from "../component/Domain";
 import { axios, apis, qs } from "../api";
 
 class ApplyResetPassword extends React.Component {
@@ -102,9 +101,7 @@ class ApplyResetPassword extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item>
-          <h2>
-            申请重置密码<Domain />
-          </h2>
+          <h2>申请重置密码</h2>
         </Form.Item>
         <Form.Item
           key={0}

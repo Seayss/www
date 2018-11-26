@@ -3,11 +3,10 @@ import { Alert, Breadcrumb, Tabs, message, Carousel } from "antd";
 import styled from "styled-components";
 import moment from "moment";
 import { axios, apis, logout } from "../../api";
-import Alipay from "../../component/Alipay";
+import Pay from "./Pay";
 import Notice from "../../component/Notice";
 import Loadable from "../../component/Loadable";
 import Media from "../../component/Media";
-import Domain from "../../component/Domain";
 import GetHongbao from "./GetHongbao";
 import Contribute from "./Contribute";
 import FriendLink from "./FriendLink";
@@ -43,6 +42,7 @@ export default class Home extends React.Component {
     this.state = {
       user: {},
       cookies: [],
+      payList: [],
       noticeList: [],
       number: {
         ele: {
@@ -97,8 +97,7 @@ export default class Home extends React.Component {
           {this.renderCarousel()}
           {this.renderHello()}
           {this.renderBreadcrumb()}
-          <Alipay user={user} />
-          <Domain />
+          <Pay user={user} />
           {this.renderAvailable()}
           <Notice />
           <Talk />
@@ -191,15 +190,15 @@ export default class Home extends React.Component {
       .then(data => this.setState({ rankData: data.data }));
   };
 
-  getUserInfo = e => {
-    axios.get(apis.getUser).then(data => {
-      if (data.code === 0) {
-        this.setState({ user: data.data });
-      } else {
-        message.error(data.message);
-      }
-    });
-  };
+  async getUserInfo() {
+    const user = await axios.get(apis.getUser);
+    if (user.code !== 0) {
+      return message.error(user.message);
+    }
+    this.setState({ user: user.data });
+    const payList = await axios.get(`${apis.getPayList}/${this.state.user.id}`);
+    this.setState({ payList: payList.data });
+  }
 
   getCookieList = e => {
     axios.get(apis.cookie).then(data => {
@@ -350,7 +349,10 @@ export default class Home extends React.Component {
   };
 
   renderAvailable() {
-    const { meituan, ele, star } = this.state.number;
+    const {
+      payList,
+      number: { meituan, ele, star }
+    } = this.state;
     return (
       <Alert
         style={{ margin: "15px 0" }}
@@ -360,6 +362,15 @@ export default class Home extends React.Component {
               "您还没有任何贡献，请查看规则和贡献教程"
             ) : (
               <div>
+                {payList.length && (
+                  <img
+                    src={require("../../static/vip.png")}
+                    width={20}
+                    height={20}
+                    style={{ marginRight: 5 }}
+                    alt=""
+                  />
+                )}
                 {[
                   { text: "美团", value: meituan },
                   { text: "饿了么", value: ele },
@@ -378,7 +389,7 @@ export default class Home extends React.Component {
             "数据加载中，长时间没有响应请刷新页面"
           )
         }
-        type="info"
+        type={payList.length ? "error" : "info"}
       />
     );
   }
