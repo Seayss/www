@@ -142,10 +142,10 @@ export default class Pay extends React.Component {
           <Card>
             <div>
               <h1>
-                {this.state.card === "month" ? "18.88" : "8.88"}元 付费周卡({this
+                {this.state.card === "month" ? "18.88" : "8.88"}元 付费{this
                   .state.card === "month"
-                  ? 30
-                  : 7}天)
+                  ? "月"
+                  : "周"}卡({this.state.card === "month" ? 30 : 7}天)
               </h1>
               <p>
                 付款后刷新页面查看次数，1分钟内生效，不支持退款
