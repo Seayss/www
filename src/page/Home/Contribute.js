@@ -10,7 +10,7 @@ import {
   Icon
 } from "antd";
 import { axios, apis, qs } from "../../api";
-import ContributeForm from "./Contribute.Form";
+import ContributeForm from "./ContributeForm";
 
 class Contribute extends React.Component {
   constructor(props) {
