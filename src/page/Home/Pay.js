@@ -36,13 +36,7 @@ const RmbButton = styled(Button)`
   }
 `;
 
-const RedButton = styled(RmbButton)`
-  color: #fff;
-  background-color: #ff4d4f;
-  border-color: #ff4d4f;
-`;
-
-const Zhouka = styled.div`
+const Card = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -58,7 +52,7 @@ const Zhouka = styled.div`
 
 export default class Pay extends React.Component {
   state = {
-    showZhouka: false,
+    showKa: false,
     application: 0,
     qrcode: "",
     wxPayLoading: false
@@ -131,21 +125,34 @@ export default class Pay extends React.Component {
           </RmbButton>
         </Button.Group>
         <Button.Group style={{ marginLeft: 20 }}>
-          <RedButton
+          <RmbButton
             type="danger"
-            onClick={() => this.setState({ showZhouka: true })}
+            onClick={() => this.setState({ showKa: true, card: "week" })}
           >
             付费周卡
-          </RedButton>
+          </RmbButton>
+          <RmbButton
+            type="danger"
+            onClick={() => this.setState({ showKa: true, card: "month" })}
+          >
+            付费月卡
+          </RmbButton>
         </Button.Group>
-        {this.state.showZhouka && (
-          <Zhouka>
+        {this.state.showKa && (
+          <Card>
             <div>
-              <h1>8.88元 付费周卡(7天)</h1>
+              <h1>
+                {this.state.card === "month" ? "18.88" : "8.88"}元 付费周卡({this
+                  .state.card === "month"
+                  ? 30
+                  : 7}天)
+              </h1>
               <p>
                 付款后刷新页面查看次数，1分钟内生效，不支持退款
                 <br />
-                可叠加购买多次，单独计算周卡时间
+                可叠加购买多次，单独计算{this.state.card === "month"
+                  ? "月"
+                  : "周"}卡时间
                 <br />
                 次数不累积到第二天，建议领到最大前一个囤包
               </p>
@@ -156,17 +163,19 @@ export default class Pay extends React.Component {
                 value={this.state.application}
                 style={{ marginBottom: "12px" }}
               >
-                <Radio value={0}>美团周卡-每天获得20次</Radio>
+                <Radio value={0}>
+                  美团{this.state.card === "month" ? "月" : "周"}卡-每天获得20次
+                </Radio>
                 <br />
                 <Radio value={1} style={{ margin: "10px 0" }}>
-                  饿了么周卡-每天获得50次
+                  饿了么{this.state.card === "month" ? "月" : "周"}卡-每天获得50次
                 </Radio>
               </Radio.Group>
               <br />
               <div>
                 <Button
                   type="danger"
-                  onClick={() => this.setState({ showZhouka: false })}
+                  onClick={() => this.setState({ showKa: false })}
                 >
                   取消
                 </Button>
@@ -196,7 +205,7 @@ export default class Pay extends React.Component {
                 </div>
               )}
             </div>
-          </Zhouka>
+          </Card>
         )}
       </Container>
     );
@@ -214,7 +223,8 @@ export default class Pay extends React.Component {
         qs.stringify({
           type: weixin ? "cashier" : "native",
           user_id: this.props.user.id,
-          application: this.state.application
+          application: this.state.application,
+          card: this.state.card
         })
       );
       if (message2) {
