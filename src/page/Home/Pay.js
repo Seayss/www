@@ -78,6 +78,8 @@ export default class Pay extends React.Component {
   }
 
   render() {
+    const cardName = this.state.card === "month" ? "月卡" : "周卡";
+
     return (
       <Container>
         <Button.Group>
@@ -142,10 +144,9 @@ export default class Pay extends React.Component {
           <Card>
             <div>
               <h1>
-                {this.state.card === "month" ? "18.88" : "8.88"}元 付费{this
-                  .state.card === "month"
-                  ? "月"
-                  : "周"}卡({this.state.card === "month" ? 30 : 7}天)
+                {this.state.card === "month" ? "18.88" : "8.88"}元 付费{
+                  cardName
+                }({this.state.card === "month" ? 30 : 7}天)
               </h1>
               <p>
                 付款后刷新页面查看次数，1分钟内生效，不支持退款
@@ -163,12 +164,10 @@ export default class Pay extends React.Component {
                 value={this.state.application}
                 style={{ marginBottom: "12px" }}
               >
-                <Radio value={0}>
-                  美团{this.state.card === "month" ? "月" : "周"}卡-每天获得20次
-                </Radio>
+                <Radio value={0}>美团{cardName}-每天获得20次</Radio>
                 <br />
                 <Radio value={1} style={{ margin: "10px 0" }}>
-                  饿了么{this.state.card === "month" ? "月" : "周"}卡-每天获得50次
+                  饿了么{cardName}-每天获得50次
                 </Radio>
               </Radio.Group>
               <br />
