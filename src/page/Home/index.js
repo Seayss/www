@@ -362,7 +362,7 @@ export default class Home extends React.Component {
               "您还没有任何贡献，请查看规则和贡献教程"
             ) : (
               <div>
-                {payList.length && (
+                {payList.length ? (
                   <img
                     src={require("../../static/vip.png")}
                     width={20}
@@ -370,7 +370,7 @@ export default class Home extends React.Component {
                     style={{ marginRight: 5 }}
                     alt=""
                   />
-                )}
+                ) : ''}
                 {[
                   { text: "美团", value: meituan },
                   { text: "饿了么", value: ele },
