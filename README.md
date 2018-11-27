@@ -12,7 +12,7 @@
 
 ## 开发
 
-环境要求 Node.js 9.x
+环境要求 Node.js 9.x 以上，最好是 10.x
 
 ```bash
 npm i
