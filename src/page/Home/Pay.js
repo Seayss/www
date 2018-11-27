@@ -82,7 +82,7 @@ export default class Pay extends React.Component {
 
     return (
       <Container>
-        <Button.Group>
+        <Button.Group style={{ marginBottom: 5, marginRight: 5 }}>
           <RmbButton
             type="primary"
             onClick={() => message.info("如果本站对您有帮助，欢迎打赏支持我们")}
@@ -126,7 +126,7 @@ export default class Pay extends React.Component {
             </Image>
           </RmbButton>
         </Button.Group>
-        <Button.Group style={{ marginLeft: 20 }}>
+        <Button.Group>
           <RmbButton
             type="danger"
             onClick={() => this.setState({ showKa: true, card: "week" })}
@@ -144,16 +144,14 @@ export default class Pay extends React.Component {
           <Card>
             <div>
               <h1>
-                {this.state.card === "month" ? "18.88" : "8.88"}元 付费{
-                  cardName
-                }({this.state.card === "month" ? 30 : 7}天)
+                {this.state.card === "month" ? "18.88" : "8.88"}元 付费
+                {cardName}({this.state.card === "month" ? 30 : 7}天)
               </h1>
               <p>
                 付款后刷新页面查看次数，1分钟内生效，不支持退款
                 <br />
-                可叠加购买多次，单独计算{this.state.card === "month"
-                  ? "月"
-                  : "周"}卡时间
+                可叠加购买多次，单独计算
+                {this.state.card === "month" ? "月" : "周"}卡时间
                 <br />
                 次数不累积到第二天，建议领到最大前一个囤包
               </p>
